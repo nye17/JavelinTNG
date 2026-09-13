@@ -7,12 +7,37 @@ JAVELIN The Next Generation
 ===========================
 
 JAVELIN is modernized and renamed as the JavelinTNG. We have removed the old
-dependence on legacy fortran codes and older version of `numpy` and sped up the MCMC inference/parallelization considerably. Now JavelinTNG can be installed by the modern installation method `pip` via one-line
+dependence on legacy fortran codes and older version of `numpy` and sped up the MCMC inference/parallelization considerably.
+
+Modern installation and emcee backends
+=====================================
+
+The modernized package installs without a Fortran compiler::
+
+    $ python -m pip install .
+
+or you can do::
 
     $ pip install .
 
-The MCMC sampler can
-now be chosen by declaring `javelin.set_sampler_backend(backend)`, where the `backend` can be `"emcee"` to call your externally installed `emcee`, `"internal"` to call the internal `emcee` bundled inside JavelinTNG, or `"auto"` to pick the external one by default but fall back to internal if failed.
+To use current external ``emcee`` (3.1.6 or newer)::
+
+    $ python -m pip install '.[emcee]'
+
+or::
+
+    $ pip install '.[emcee]'
+
+JAVELIN keeps the bundled historical sampler for reproducibility. Select the
+backend globally before inference::
+
+    >>>import javelin
+    >>> javelin.set_sampler_backend("internal")   # bundled historical sampler
+    >>>javelin.set_sampler_backend("emcee")      # installed emcee 3.x
+    >>>javelin.set_sampler_backend("auto")       # emcee if installed, else internal
+
+Existing calls such as ``Cont_Model.do_mcmc`` and ``Rmap_Model.do_mcmc`` do not
+otherwise need to change.
 
 What is JAVELIN
 ===============
@@ -766,26 +791,3 @@ for photometric reverberation mapping, and
 
 for thin disk modelling.
 
-
-
-Modern installation and emcee backends
---------------------------------------
-
-The modernized package installs without a Fortran compiler::
-
-    python -m pip install .
-
-To use current external ``emcee`` (3.1.6 or newer)::
-
-    python -m pip install '.[emcee]'
-
-JAVELIN keeps the bundled historical sampler for reproducibility. Select the
-backend globally before inference::
-
-    import javelin
-    javelin.set_sampler_backend("internal")   # bundled historical sampler
-    javelin.set_sampler_backend("emcee")      # installed emcee 3.x
-    javelin.set_sampler_backend("auto")       # emcee if installed, else internal
-
-Existing calls such as ``Cont_Model.do_mcmc`` and ``Rmap_Model.do_mcmc`` do not
-otherwise need to change.
