@@ -32,7 +32,7 @@ JAVELIN keeps the bundled historical sampler for reproducibility. Select the
 backend globally before inference::
 
     >>>import javelin
-    >>> javelin.set_sampler_backend("internal")   # bundled historical sampler
+    >>>javelin.set_sampler_backend("internal")   # bundled historical sampler
     >>>javelin.set_sampler_backend("emcee")      # installed emcee 3.x
     >>>javelin.set_sampler_backend("auto")       # emcee if installed, else internal
 
