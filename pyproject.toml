@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "javelin-tng"
+version = "0.5.3"
+description = "JAVELIN reverberation mapping and Gaussian-process time-series inference"
+readme = "README.rst"
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+authors = [{name = "Ying Zu"}]
+dependencies = [
+  "numpy>=2.0",
+  "scipy>=1.10",
+    "threadpoolctl>=3.1",
+  "matplotlib>=3.7",
+  "six>=1.16",
+]
+
+[project.optional-dependencies]
+emcee = ["emcee>=3.1.6"]
+test = ["pytest>=8"]
+
+[tool.setuptools]
+packages = ["javelin", "javelin.gp", "javelin.gp.cov_funs", "javelin.emcee_internal"]
+
+[tool.setuptools.package-data]
+javelin = ["*.f", "*.f90", "gp/*.f", "gp/cov_funs/*.f"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "javelin/emcee_internal"]
+python_files = ["test_*.py", "tests.py"]
+addopts = "-ra"
